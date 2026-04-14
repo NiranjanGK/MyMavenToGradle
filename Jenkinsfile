@@ -1,48 +1,35 @@
 pipeline {
-    agent any  // Use any available agent
+    agent any
 
     tools {
-        gradle 'Gradle'  // Ensure this matches the name configured in Jenkins
+        gradle 'Gradle'   // same name as configured in Jenkins
         jdk 'JDK'
     }
+
     stages {
+
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/sumanthr27/MyMavenToGradle.git'
+                git branch: 'master', url: 'https://github.com/sumanthr27/MyGradleApp.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'gradle build'  // Run Gradle build
+                sh 'gradle clean build'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'gradle test'  // Run unit tests
+                sh 'gradle test'
             }
         }
 
-        
-        
-       
-        stage('Run Application') {
+        stage('Archive') {
             steps {
-                // Start the JAR application
-                sh 'gradle run'
+                archiveArtifacts artifacts: '**/build/libs/*.jar', fingerprint: true
             }
-        }
-
-        
-    }
-
-    post {
-        success {
-            echo 'Build and deployment successful!'
-        }
-        failure {
-            echo 'Build failed!'
         }
     }
 }
