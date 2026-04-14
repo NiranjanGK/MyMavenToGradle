@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/sumanthr27/MyGradleApp.git'
+                git branch: 'master', url: 'https://github.com/sumanthr27/MyMavenToGradle.git'
             }
         }
 
